@@ -40,6 +40,7 @@ def haystack():
 	url = "http://challenge.code2040.org/api/haystack"
 	data = {"token": "a061df4b77bfec12bc1ec34d70cba02b"}
 	res = requests.post(url, data=data)
+	
 	res_dict = json.loads(res.text)
 	needle, haystack = res_dict['needle'], res_dict['haystack']
 	index = haystack.index(needle) #finds first instance of needle
@@ -51,6 +52,30 @@ def haystack():
 	val_res = requests.post(validate, data=val_data)
 	print(val_res.text)
 
+def prefix():
+	"""
+	Makes a POST request to http://challenge.code2040.org/api/prefix to obtain a
+	prefix and a list of strings, creates a list of string that do NOT begin with
+	that prefix, and POSTs the resulting list, preserving order, to 
+	http://challenge.code2040.org/api/prefix/validate
+	"""
+	url = "http://challenge.code2040.org/api/prefix"
+	data = {"token": "a061df4b77bfec12bc1ec34d70cba02b"}
+	res = requests.post(url, data=data)
+	
+	res_dict = json.loads(res.text)
+	prefix, array = res_dict['prefix'], res_dict['array']
+	print(prefix, array)
+	not_prefix = [string for string in array if not string.startswith(prefix)]
+	print(not_prefix)
+
+	validate = "http://challenge.code2040.org/api/prefix/validate"
+	val_data = {"token": "a061df4b77bfec12bc1ec34d70cba02b", "array": not_prefix}
+
+	val_res = requests.post(validate, data=val_data)
+	print(val_res.text)
+
 register()
 reverse()
 haystack()
+prefix()
