@@ -72,7 +72,7 @@ def prefix():
 	validate = "http://challenge.code2040.org/api/prefix/validate"
 	val_data = {"token": "a061df4b77bfec12bc1ec34d70cba02b", "array": not_prefix}
 
-	val_res = requests.post(validate, data=val_data)
+	val_res = requests.post(validate, json=val_data)
 	print(val_res.text)
 
 register()
